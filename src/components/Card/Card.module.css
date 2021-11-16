@@ -1,0 +1,30 @@
+.Div {
+  color: white;
+}
+
+.Atraka {
+  background-image: url(../../assets/img/atarka.jpg);
+  height: 400px;
+  background-color: lime;
+}
+
+.Crosis {
+  background-image: url(../../assets/img/crosis.jpg);
+}
+
+.Darigaaz {
+  background-image: url(../../assets/img/darigaaz.jpg);
+}
+
+.Dromar {
+  background-image: url(../../assets/img/dromar.jpg);
+}
+
+.Dromoka {
+  background-image: url(../../assets/img/dromoka.jpg);
+}
+
+.Rith {
+  background-image: url(../../assets/img/rith.jpg);
+  background-color: indigo;
+}

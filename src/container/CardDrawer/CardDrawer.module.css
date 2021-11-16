@@ -1,0 +1,19 @@
+.Container {
+  background-color: hotpink;
+  height: 100vh;
+}
+
+.Container ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+li {
+  margin: 5px;
+  padding: 10px 20px;
+  width: 30%;
+
+  list-style: none;
+  border-radius: 3px;
+}
