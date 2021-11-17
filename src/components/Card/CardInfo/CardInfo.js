@@ -1,15 +1,15 @@
 const CardInfo = [
-  { name: "Treva", manaValue: 6 },
-  { name: "Darigaaz", manaValue: 6 },
-  { name: "Rith", manaValue: 6 },
-  { name: "Dromar", manaValue: 6 },
-  { name: "Crosis", manaValue: 6 },
+  { name: "treva", manaValue: 6 },
+  { name: "darigaaz", manaValue: 6 },
+  { name: "rith", manaValue: 6 },
+  { name: "dromar", manaValue: 6 },
+  { name: "crosis", manaValue: 6 },
 
-  { name: "Atarka", manaValue: 6 },
-  { name: "Dromoka", manaValue: 6 },
-  { name: "Kolaghan", manaValue: 6 },
-  { name: "Silumgar", manaValue: 6 },
-  { name: "Ojutai", manaValue: 6 },
+  { name: "atarka", manaValue: 6 },
+  { name: "dromoka", manaValue: 6 },
+  { name: "kolaghan", manaValue: 6 },
+  { name: "silumgar", manaValue: 6 },
+  { name: "ojutai", manaValue: 6 },
 ];
 
 export default CardInfo;

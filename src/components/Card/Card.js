@@ -1,14 +1,14 @@
 import React from "react";
-import classes from "./Card.module.css";
+import Artwork from "../Artwork/Artwork";
 
 const Card = (props) => {
-  const inputClasses = [classes.Div, props.card.name];
   return (
-    <div className={inputClasses.join(" ")}>
+    <div>
       <p>
+        <Artwork art={props.card.name} />
+
         <strong>Name: {props.card.name}</strong>
       </p>
-      <p>Mana Value: {props.card.manaValue}</p>
     </div>
   );
 };
