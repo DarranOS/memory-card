@@ -4,11 +4,7 @@ import Artwork from "../Artwork/Artwork";
 const Card = (props) => {
   return (
     <div>
-      <p>
-        <Artwork art={props.card.name} />
-
-        <strong>Name: {props.card.name}</strong>
-      </p>
+      <Artwork art={props.card.name} />
     </div>
   );
 };

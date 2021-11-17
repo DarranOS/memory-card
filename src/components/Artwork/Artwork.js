@@ -1,18 +1,17 @@
 import React from "react";
 import classes from "./Artwork.module.css";
-import atarka from "../../assets/img/atarka.jpg";
-import crosis from "../../assets/img/crosis.jpg";
-import darigaaz from "../../assets/img/darigaaz.jpg";
-import dromar from "../../assets/img/dromar.jpg";
-import dromoka from "../../assets/img/dromoka.jpg";
-import kolaghan from "../../assets/img/kolaghan.jpg";
-import rith from "../../assets/img/rith.jpg";
-import silumgar from "../../assets/img/silumgar.jpg";
-import ojutai from "../../assets/img/ojutai.jpg";
-import treva from "../../assets/img/treva.jpg";
+import atarka from "../../assets/img/atarka.png";
+import crosis from "../../assets/img/crosis.png";
+import darigaaz from "../../assets/img/darigaaz.png";
+import dromar from "../../assets/img/dromar.png";
+import dromoka from "../../assets/img/dromoka.png";
+import kolaghan from "../../assets/img/kolaghan.png";
+import rith from "../../assets/img/rith.png";
+import silumgar from "../../assets/img/silumgar.png";
+import ojutai from "../../assets/img/ojutai.png";
+import treva from "../../assets/img/treva.png";
 
 const Artwork = (props) => {
-  console.log(props.art);
   const source = (props) => {
     switch (props.art) {
       case "atarka":
