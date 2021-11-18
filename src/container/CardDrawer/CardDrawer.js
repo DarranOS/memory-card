@@ -3,58 +3,129 @@ import Modal from "../../components/Modal/Modal";
 import CardInfo from "../../components/Card/CardInfo/CardInfo";
 import Card from "../../components/Card/Card";
 import classes from "./CardDrawer.module.css";
-import Transition from "react-transition-group/Transition";
 import { TransitionGroup } from "react-transition-group";
 import CSSTransition from "react-transition-group/CSSTransition";
+import Scores from "../../components/Scores/Scores";
 
 export const CardDrawer = () => {
   const [RandomCards, setRandomCards] = useState([]);
   const [SelectedCard, setSelectedCard] = useState([]);
   const [HighScore, setHighScore] = useState(0);
   const [CurrentScore, setCurrentScore] = useState(0);
-  const [Failed, setFailed] = useState(false);
-  const [refresh, setRefresh] = useState(true);
+  const [isIncorrect, setIsIncorrect] = useState(false);
+  //const [refresh, setRefresh] = useState(true);
+  const [isCancelled, setIsCancelled] = useState(false);
+  const [didHighScoreIncrease, setDidHighScoreIncrease] = useState(false);
+  const [didScoreReset, setDidScoreReset] = useState(false);
 
-  useEffect(() => console.log(`Failed: ${Failed}`), [Failed]);
+  // Utility functions -----------------------------
 
-  const transitionStyles = {
-    entering: { opacity: 1 },
-    entered: { opacity: 1 },
-    exiting: { opacity: 0 },
-    exited: { opacity: 0 },
+  useEffect(() => {
+    //Initialises App
+    RandomCardHandler();
+  }, []);
+
+  useEffect(() => {
+    // Handles the High Score Animation change
+    setDidHighScoreIncrease(true);
+    const scoreHandler = async () => {
+      await timeout(100);
+
+      setDidHighScoreIncrease(false);
+    };
+    scoreHandler();
+  }, [HighScore]);
+
+  useEffect(() => {
+    if (CurrentScore === 0) {
+      setDidScoreReset(true);
+      const scoreHandler = async () => {
+        await timeout(100);
+
+        setDidScoreReset(false);
+      };
+      scoreHandler();
+    }
+  }, [CurrentScore]);
+
+  useEffect(() => {
+    // Handles the Scores Animation change
+    setDidHighScoreIncrease(true);
+    const scoreHandler = async () => {
+      await timeout(100);
+
+      setDidHighScoreIncrease(false);
+    };
+    scoreHandler();
+  }, [HighScore]);
+
+  useEffect(() => {
+    console.log(`IsCancelling change: ${isCancelled}`);
+  }, [isCancelled]);
+
+  const timeout = (ms) => {
+    // Defines Timeout helper
+    return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
-  const animationTiming = {
-    enter: 400,
-    exit: 1000,
+  const CardRandomizer = () => {
+    // Shuffles the cards and selects/returns 5 random cards
+    const randomizedCards = [...CardInfo];
+    randomizedCards.sort(() => Math.random() - 0.5);
+    randomizedCards.sort(() => Math.random() - 0.5);
+    randomizedCards.sort(() => Math.random() - 0.5);
+    while (randomizedCards.length > 5) {
+      randomizedCards.pop();
+    }
+    return randomizedCards;
   };
 
-  const defaultStyle = {
-    transition: `opacity ${animationTiming}ms ease-in-out`,
-    opacity: 0,
+  const incorrectToggleHandler = () => {
+    // Toggles the incorrect state when an incorrect card is selected.
+    setIsIncorrect(!isIncorrect);
   };
 
-  const failedHandler = (booleen) => {
-    setFailed(booleen);
+  const spawnCards = async (cards) => {
+    // Pushs cards to state and resets incorrect toggle
+    console.log(`Spawn Cards - Cancelled? ${isCancelled}`);
+    await timeout(1000);
+    if (!isCancelled) {
+      console.log(`Spawn Cards - Pushing cards to Array`);
+      setRandomCards(cards);
+    }
+    console.log(`Spawn Cards - Incorrect? ${isIncorrect}`);
+    if (isIncorrect) incorrectToggleHandler();
   };
 
   const RandomCardHandler = () => {
-    const randomCards = [...CardInfo];
-    randomCards.sort(() => Math.random() - 0.5);
-    while (randomCards.length > 5) {
-      randomCards.pop();
+    // Takes the 5 random cards
+    const drawnCards = CardRandomizer();
+    console.log("Refreshing in 3...2...1...");
+    spawnCards(drawnCards);
+
+    return () => {
+      setIsCancelled(true);
+    };
+  };
+
+  const resetSelectedCards = () => {
+    // Clears the array of selected cards and calls the RandomCard handler
+    for (let i = SelectedCard.length; i > 0; i--) {
+      setSelectedCard(SelectedCard.pop());
+      setSelectedCard([]);
     }
-    setRandomCards(randomCards);
-    failedHandler(false);
+    RandomCardHandler();
   };
 
   const SelectedCardHandler = (name) => {
+    console.log(name.id);
     if (SelectedCard.includes(name.id)) {
+      console.error("INCORRECT");
       setCurrentScore(0);
+      if (!isIncorrect) incorrectToggleHandler();
       resetSelectedCards();
-      failedHandler(true);
-      RandomCardHandler();
     } else {
+      console.info("CORRECT");
       setSelectedCard(SelectedCard.concat(name.id));
       setCurrentScore(CurrentScore + 1);
       if (CurrentScore >= HighScore) {
@@ -64,15 +135,8 @@ export const CardDrawer = () => {
     }
   };
 
-  const resetSelectedCards = () => {
-    for (let i = SelectedCard.length; i > 0; i--) {
-      setSelectedCard(SelectedCard.pop());
-      setSelectedCard([]);
-    }
-  };
-
   const listItems = RandomCards.map((card) => (
-    <CSSTransition key={card.name} classNames="fade" timeout={300}>
+    <CSSTransition key={card.name} classNames="fade" timeout={300} unmountOnExit>
       <li
         id={card.name}
         onClick={(e) => {
@@ -85,55 +149,59 @@ export const CardDrawer = () => {
   ));
 
   return (
+    // Returns JSX
     <div className={classes.Container}>
-      <button className="Button" onClick={RandomCardHandler}>
-        Click
-      </button>
-
-      <p>Current Score: {CurrentScore}</p>
-      <p>High Score: {HighScore}</p>
-      {/* <ul>
-        {RandomCards.map((card) => (
-          <Transition
-            key={card.name}
-            in={refresh}
-            timeout={animationTiming}
-            mountOnEnter
-            unmountOnExit
-            onEnter={() => console.log("onEnter")}
-            onEntering={() => console.log("onEntering")}
-            onEntered={() => console.log("onEntered")}
-            onExit={() => console.log("onExit")}
-            onExiting={() => console.log("onExiting")}
-            onExited={() => console.log("onExited")}
-          >
-            {(state) => (
-              <div
-                style={{
-                  ...defaultStyle,
-                  ...transitionStyles[state],
-                }}
-              >
-                <li
-                  key={card.name}
-                  id={card.name}
-                  onClick={(e) => {
-                    SelectedCardHandler(e.target.closest("li"));
-                  }}
-                >
-                  <Card card={card} />
-                  <p> {state} </p>
-                </li>
-              </div>
-            )}
-          </Transition>
-        ))}
-      </ul> */}
+      <Scores
+        highScore={HighScore}
+        didHighIncrease={didHighScoreIncrease}
+        didScoreReset={didScoreReset}
+        currentScore={CurrentScore}
+      />
       <TransitionGroup component="ul">{listItems}</TransitionGroup>
 
-      {Failed ? <Modal /> : null}
+      {isIncorrect ? <Modal /> : null}
     </div>
   );
 };
 
 export default CardDrawer;
+
+// useEffect(() => {}, [randomCards]);
+
+// const RandomCardHandler = () => {
+//   const randomCards = CardRandomizer();
+//   let isCancelled = false;
+//   console.log("Refreshing in 3...2...1...");
+//   const spawnCards = async () => {
+//     console.log(isCancelled);
+//     await timeout(3000);
+//     if (!isCancelled) {
+//       console.log("Refreshing!!");
+//       setRandomCards(randomCards);
+//     }
+//   };
+//   spawnCards();
+//   if (Failed) failedToggleHandler();
+
+//   return () => {
+//     console.log("Unmounting");
+//     isCancelled = true;
+//   };
+// };
+
+// const transitionStyles = {
+//   entering: { opacity: 1 },
+//   entered: { opacity: 1 },
+//   exiting: { opacity: 0 },
+//   exited: { opacity: 0 },
+// };
+
+// const animationTiming = {
+//   enter: 400,
+//   exit: 1000,
+// };
+
+// const defaultStyle = {
+//   transition: `opacity ${animationTiming}ms ease-in-out`,
+//   opacity: 0,
+// };

@@ -1,0 +1,11 @@
+.Scores {
+  display: flex;
+  margin: 50px auto 0 auto;
+  margin-bottom: 30px;
+  width: 30%;
+  align-items: center;
+  justify-items: flex-end;
+  flex-direction: row;
+
+  padding: 5px;
+}
