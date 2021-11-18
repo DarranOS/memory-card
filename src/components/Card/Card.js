@@ -1,12 +1,14 @@
 import React from "react";
 import Artwork from "../Artwork/Artwork";
-import Cross from "./Cross/Cross";
+import Cardback from "./Cardback/Cardback";
+import classes from "./Card.module.css";
 
 const Card = (props) => {
   return (
-    <React.Fragment>
+    <div className={classes.Card}>
       <Artwork art={props.card.name} />
-    </React.Fragment>
+      <Cardback className={classes.Cardback} />
+    </div>
   );
 };
 

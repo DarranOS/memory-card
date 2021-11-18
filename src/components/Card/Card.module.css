@@ -1,0 +1,16 @@
+.Card {
+  width: 15vw;
+  max-width: 400px;
+  transition: all 0.5s;
+  background-color: yellow;
+}
+
+.Card div img {
+  width: 15vw;
+  transition: all 0.8s;
+  background-color: lime;
+}
+
+.Card:hover div img {
+  transform: rotateY(180deg);
+}
