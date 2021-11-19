@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Modal from "../../components/Modal/Modal";
 import CardInfo from "../../components/Card/CardInfo/CardInfo";
 import Card from "../../components/Card/Card";
 import classes from "./CardDrawer.module.css";
 import { TransitionGroup } from "react-transition-group";
 import CSSTransition from "react-transition-group/CSSTransition";
 import Scores from "../../components/Scores/Scores";
+import Instructions from "../../components/Instructions/Instructions";
 
 export const CardDrawer = () => {
   const [RandomCards, setRandomCards] = useState([]);
@@ -13,7 +13,7 @@ export const CardDrawer = () => {
   const [HighScore, setHighScore] = useState(0);
   const [CurrentScore, setCurrentScore] = useState(0);
   const [isIncorrect, setIsIncorrect] = useState(false);
-  //const [refresh, setRefresh] = useState(true);
+  const [refresh, setRefresh] = useState(false);
   const [isCancelled, setIsCancelled] = useState(false);
   const [didHighScoreIncrease, setDidHighScoreIncrease] = useState(false);
   const [didScoreReset, setDidScoreReset] = useState(false);
@@ -24,6 +24,17 @@ export const CardDrawer = () => {
     //Initialises App
     RandomCardHandler();
   }, []);
+
+  useEffect(() => {
+    // Handles the Card Refresh Animation change
+    setRefresh(true);
+    const scoreHandler = async () => {
+      await timeout(100);
+
+      setRefresh(false);
+    };
+    scoreHandler();
+  }, [refresh]);
 
   useEffect(() => {
     // Handles the High Score Animation change
@@ -143,7 +154,7 @@ export const CardDrawer = () => {
           SelectedCardHandler(e.target.closest("li"));
         }}
       >
-        <Card card={card} />
+        <Card card={card} refresh={false} />
       </li>
     </CSSTransition>
   ));
@@ -152,6 +163,7 @@ export const CardDrawer = () => {
     // Returns JSX
     <div className={classes.Container}>
       <Scores
+        className={classes.Scores2}
         highScore={HighScore}
         didHighIncrease={didHighScoreIncrease}
         didScoreReset={didScoreReset}
@@ -159,7 +171,7 @@ export const CardDrawer = () => {
       />
       <TransitionGroup component="ul">{listItems}</TransitionGroup>
 
-      {isIncorrect ? <Modal /> : null}
+      <Instructions className={classes.Instructions} incorrect={isIncorrect} />
     </div>
   );
 };

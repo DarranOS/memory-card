@@ -1,5 +1,4 @@
 import React from "react";
-import classes from "./Artwork.module.css";
 import atarka from "../../assets/img/atarka.png";
 import crosis from "../../assets/img/crosis.png";
 import darigaaz from "../../assets/img/darigaaz.png";
@@ -48,7 +47,11 @@ const Artwork = (props) => {
         return dromoka;
     }
   };
-  return <img alt="dragin-art" src={source(props)} className={classes.Art}></img>;
+  return (
+    <div className="Card__Front">
+      <img alt="dragon-art" src={source(props)}></img>
+    </div>
+  );
 };
 
 export default Artwork;
