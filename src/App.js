@@ -1,28 +1,29 @@
-import "./App.css";
-import React, { useState } from "react";
+import classes from "./App.css";
 import CardDrawer from "./container/CardDrawer/CardDrawer";
-import Modal from "./components/Modal/Modal";
-import Backdrop from "./components/Backdrop/Backdrop";
+import { useSelector, useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "./state/index";
+import Scores from "./components/Scores/Scores";
+import Instructions from "./components/Instructions/Instructions";
 
 function App() {
-  const [modalIsOpen, setModalIsOpen] = useState(true);
-  const [backdropIsOpen, setBackdropIsOpen] = useState(true);
-
-  const modalHandler = () => {
-    setModalIsOpen(!modalIsOpen);
-  };
-  const backdropHandler = () => {
-    console.log(backdropIsOpen);
-    setBackdropIsOpen(!backdropIsOpen);
-  };
-
   return (
     <div className="App">
-      {modalIsOpen ? <Modal closed={modalHandler} /> : null}
-      {modalIsOpen ? <Backdrop onClick={backdropHandler} /> : null}
+      <Instructions />
       <CardDrawer />
+      <Scores />
     </div>
   );
 }
 
 export default App;
+
+/*
+
+
+const dispatch = useDispatch();
+
+  const { increaseCurrentScore, resetCurrentScore, increaseHighScore } =
+    bindActionCreators(actionCreators, dispatch);
+    
+    */

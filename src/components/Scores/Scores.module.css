@@ -1,7 +1,6 @@
 .Scores {
   display: flex;
-  margin: 50px auto 0 auto;
-  margin-bottom: 30px;
+  margin: 0 auto;
   width: 30%;
   align-items: center;
   justify-items: flex-end;

@@ -4,8 +4,6 @@ import Card from "../../components/Card/Card";
 import classes from "./CardDrawer.module.css";
 import { TransitionGroup } from "react-transition-group";
 import CSSTransition from "react-transition-group/CSSTransition";
-import Scores from "../../components/Scores/Scores";
-import Instructions from "../../components/Instructions/Instructions";
 
 export const CardDrawer = () => {
   const [RandomCards, setRandomCards] = useState([]);
@@ -147,7 +145,7 @@ export const CardDrawer = () => {
   };
 
   const listItems = RandomCards.map((card) => (
-    <CSSTransition key={card.name} classNames="fade" timeout={300} unmountOnExit>
+    <CSSTransition key={card.name} timeout={300} unmountOnExit>
       <li
         id={card.name}
         onClick={(e) => {
@@ -162,16 +160,7 @@ export const CardDrawer = () => {
   return (
     // Returns JSX
     <div className={classes.Container}>
-      <Scores
-        className={classes.Scores2}
-        highScore={HighScore}
-        didHighIncrease={didHighScoreIncrease}
-        didScoreReset={didScoreReset}
-        currentScore={CurrentScore}
-      />
       <TransitionGroup component="ul">{listItems}</TransitionGroup>
-
-      <Instructions className={classes.Instructions} incorrect={isIncorrect} />
     </div>
   );
 };
