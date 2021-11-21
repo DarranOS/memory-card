@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import CardInfo from "../../components/Card/CardInfo/CardInfo";
 import Card from "../../components/Card/Card";
 import classes from "./CardDrawer.module.css";
 import { TransitionGroup } from "react-transition-group";
@@ -7,9 +6,10 @@ import CSSTransition from "react-transition-group/CSSTransition";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state/index";
+import CardRandomizer from "../../components/CardRandomizer/CardRandomizer";
 
 export const CardDrawer = () => {
-  const scores = useSelector((state) => state);
+  const state = useSelector((state) => state);
   const [RandomCards, setRandomCards] = useState([]);
   const [SelectedCard, setSelectedCard] = useState([]);
   const [HighScore, setHighScore] = useState(0);
@@ -24,13 +24,27 @@ export const CardDrawer = () => {
 
   const dispatch = useDispatch();
 
-  const { increaseCurrentScore, resetCurrentScore, increaseHighScore } =
-    bindActionCreators(actionCreators, dispatch);
+  const {
+    increaseCurrentScore,
+    resetCurrentScore,
+    increaseHighScore,
+    currentSelectedCard,
+  } = bindActionCreators(actionCreators, dispatch);
 
   useEffect(() => {
     //Initialises App
     RandomCardHandler();
   }, []);
+
+  useEffect(() => {
+    // Handles the Card Refresh Animation change
+    const scoreHandler = async () => {
+      await timeout(100);
+
+      setRefresh(false);
+    };
+    scoreHandler();
+  }, [SelectedCard]);
 
   useEffect(() => {
     // Handles the Card Refresh Animation change
@@ -77,25 +91,9 @@ export const CardDrawer = () => {
     scoreHandler();
   }, [HighScore]);
 
-  useEffect(() => {
-    console.log(`IsCancelling change: ${isCancelled}`);
-  }, [isCancelled]);
-
   const timeout = (ms) => {
     // Defines Timeout helper
     return new Promise((resolve) => setTimeout(resolve, ms));
-  };
-
-  const CardRandomizer = () => {
-    // Shuffles the cards and selects/returns 5 random cards
-    const randomizedCards = [...CardInfo];
-    randomizedCards.sort(() => Math.random() - 0.5);
-    randomizedCards.sort(() => Math.random() - 0.5);
-    randomizedCards.sort(() => Math.random() - 0.5);
-    while (randomizedCards.length > 5) {
-      randomizedCards.pop();
-    }
-    return randomizedCards;
   };
 
   const incorrectToggleHandler = () => {
@@ -105,20 +103,16 @@ export const CardDrawer = () => {
 
   const spawnCards = async (cards) => {
     // Pushs cards to state and resets incorrect toggle
-    console.log(`Spawn Cards - Cancelled? ${isCancelled}`);
     await timeout(1000);
     if (!isCancelled) {
-      console.log(`Spawn Cards - Pushing cards to Array`);
       setRandomCards(cards);
     }
-    console.log(`Spawn Cards - Incorrect? ${isIncorrect}`);
     if (isIncorrect) incorrectToggleHandler();
   };
 
   const RandomCardHandler = () => {
     // Takes the 5 random cards
     const drawnCards = CardRandomizer();
-    console.log("Refreshing in 3...2...1...");
     spawnCards(drawnCards);
 
     return () => {
@@ -137,16 +131,16 @@ export const CardDrawer = () => {
 
   const SelectedCardHandler = (name) => {
     console.log(name.id);
-    if (SelectedCard.includes(name.id)) {
+    if (state.selected === name.id) {
       console.error("INCORRECT");
       resetCurrentScore(0);
       if (!isIncorrect) incorrectToggleHandler();
       resetSelectedCards();
     } else {
       console.info("CORRECT");
-      setSelectedCard(SelectedCard.concat(name.id));
       increaseCurrentScore(1);
-      if (scores.current >= scores.high) {
+      currentSelectedCard(name.id);
+      if (state.current >= state.high) {
         increaseHighScore(1);
       }
       RandomCardHandler();
