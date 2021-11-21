@@ -4,8 +4,12 @@ import Card from "../../components/Card/Card";
 import classes from "./CardDrawer.module.css";
 import { TransitionGroup } from "react-transition-group";
 import CSSTransition from "react-transition-group/CSSTransition";
+import { useSelector, useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../state/index";
 
 export const CardDrawer = () => {
+  const scores = useSelector((state) => state);
   const [RandomCards, setRandomCards] = useState([]);
   const [SelectedCard, setSelectedCard] = useState([]);
   const [HighScore, setHighScore] = useState(0);
@@ -17,6 +21,11 @@ export const CardDrawer = () => {
   const [didScoreReset, setDidScoreReset] = useState(false);
 
   // Utility functions -----------------------------
+
+  const dispatch = useDispatch();
+
+  const { increaseCurrentScore, resetCurrentScore, increaseHighScore } =
+    bindActionCreators(actionCreators, dispatch);
 
   useEffect(() => {
     //Initialises App
@@ -130,15 +139,15 @@ export const CardDrawer = () => {
     console.log(name.id);
     if (SelectedCard.includes(name.id)) {
       console.error("INCORRECT");
-      setCurrentScore(0);
+      resetCurrentScore(0);
       if (!isIncorrect) incorrectToggleHandler();
       resetSelectedCards();
     } else {
       console.info("CORRECT");
       setSelectedCard(SelectedCard.concat(name.id));
-      setCurrentScore(CurrentScore + 1);
-      if (CurrentScore >= HighScore) {
-        setHighScore(HighScore + 1);
+      increaseCurrentScore(1);
+      if (scores.current >= scores.high) {
+        increaseHighScore(1);
       }
       RandomCardHandler();
     }
@@ -166,43 +175,3 @@ export const CardDrawer = () => {
 };
 
 export default CardDrawer;
-
-// useEffect(() => {}, [randomCards]);
-
-// const RandomCardHandler = () => {
-//   const randomCards = CardRandomizer();
-//   let isCancelled = false;
-//   console.log("Refreshing in 3...2...1...");
-//   const spawnCards = async () => {
-//     console.log(isCancelled);
-//     await timeout(3000);
-//     if (!isCancelled) {
-//       console.log("Refreshing!!");
-//       setRandomCards(randomCards);
-//     }
-//   };
-//   spawnCards();
-//   if (Failed) failedToggleHandler();
-
-//   return () => {
-//     console.log("Unmounting");
-//     isCancelled = true;
-//   };
-// };
-
-// const transitionStyles = {
-//   entering: { opacity: 1 },
-//   entered: { opacity: 1 },
-//   exiting: { opacity: 0 },
-//   exited: { opacity: 0 },
-// };
-
-// const animationTiming = {
-//   enter: 400,
-//   exit: 1000,
-// };
-
-// const defaultStyle = {
-//   transition: `opacity ${animationTiming}ms ease-in-out`,
-//   opacity: 0,
-// };
