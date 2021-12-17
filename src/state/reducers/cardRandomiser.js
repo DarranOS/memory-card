@@ -12,4 +12,4 @@ const CardInfo = [
   { name: "ojutai", manaValue: 6 },
 ];
 
-export default CardInfo;
+const cardRandomiserReducer = () => {};
