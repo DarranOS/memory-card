@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-import CardInfo from "../../components/Card/CardInfo/CardInfo";
-import Card from "../../components/Card/Card";
-import classes from "./CardDrawer.module.css";
-import { TransitionGroup } from "react-transition-group";
-import CSSTransition from "react-transition-group/CSSTransition";
+import Card from "../components/Card";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
-import { actionCreators } from "../../state/index";
+import { actionCreators } from "../state/index";
+import styled from "styled-components";
 
 export const CardDrawer = () => {
   const scores = useSelector((state) => state);
@@ -19,6 +16,20 @@ export const CardDrawer = () => {
   const [isCancelled, setIsCancelled] = useState(false);
   const [didHighScoreIncrease, setDidHighScoreIncrease] = useState(false);
   const [didScoreReset, setDidScoreReset] = useState(false);
+
+  const CardInfo = [
+    { name: "treva", manaValue: 6 },
+    { name: "darigaaz", manaValue: 6 },
+    { name: "rith", manaValue: 6 },
+    { name: "dromar", manaValue: 6 },
+    { name: "crosis", manaValue: 6 },
+
+    { name: "atarka", manaValue: 6 },
+    { name: "dromoka", manaValue: 6 },
+    { name: "kolaghan", manaValue: 6 },
+    { name: "silumgar", manaValue: 6 },
+    { name: "ojutai", manaValue: 6 },
+  ];
 
   // Utility functions -----------------------------
 
@@ -154,24 +165,40 @@ export const CardDrawer = () => {
   };
 
   const listItems = RandomCards.map((card) => (
-    <CSSTransition key={card.name} timeout={300} unmountOnExit>
-      <li
-        id={card.name}
-        onClick={(e) => {
-          SelectedCardHandler(e.target.closest("li"));
-        }}
-      >
-        <Card card={card} refresh={false} />
-      </li>
-    </CSSTransition>
+    <li
+      id={card.name}
+      onClick={(e) => {
+        SelectedCardHandler(e.target.closest("li"));
+      }}
+    >
+      <Card card={card} refresh={false} />
+    </li>
   ));
 
   return (
     // Returns JSX
-    <div className={classes.Container}>
-      <TransitionGroup component="ul">{listItems}</TransitionGroup>
-    </div>
+    <Container>
+      <ul>{listItems}</ul>
+    </Container>
   );
 };
 
 export default CardDrawer;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  ${"" /* overflow: hidden; */}
+  width: 100%;
+
+  ul {
+    display: flex;
+    margin-top: -22%;
+
+    li {
+      list-style: none;
+    }
+  }
+`;
