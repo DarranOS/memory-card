@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Card from "../components/Card";
+import Card from "./Card";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../state/index";
@@ -16,20 +16,6 @@ export const CardDrawer = () => {
   const [isCancelled, setIsCancelled] = useState(false);
   const [didHighScoreIncrease, setDidHighScoreIncrease] = useState(false);
   const [didScoreReset, setDidScoreReset] = useState(false);
-
-  const CardInfo = [
-    { name: "treva", manaValue: 6 },
-    { name: "darigaaz", manaValue: 6 },
-    { name: "rith", manaValue: 6 },
-    { name: "dromar", manaValue: 6 },
-    { name: "crosis", manaValue: 6 },
-
-    { name: "atarka", manaValue: 6 },
-    { name: "dromoka", manaValue: 6 },
-    { name: "kolaghan", manaValue: 6 },
-    { name: "silumgar", manaValue: 6 },
-    { name: "ojutai", manaValue: 6 },
-  ];
 
   // Utility functions -----------------------------
 
@@ -95,18 +81,6 @@ export const CardDrawer = () => {
   const timeout = (ms) => {
     // Defines Timeout helper
     return new Promise((resolve) => setTimeout(resolve, ms));
-  };
-
-  const CardRandomizer = () => {
-    // Shuffles the cards and selects/returns 5 random cards
-    const randomizedCards = [...CardInfo];
-    randomizedCards.sort(() => Math.random() - 0.5);
-    randomizedCards.sort(() => Math.random() - 0.5);
-    randomizedCards.sort(() => Math.random() - 0.5);
-    while (randomizedCards.length > 5) {
-      randomizedCards.pop();
-    }
-    return randomizedCards;
   };
 
   const incorrectToggleHandler = () => {

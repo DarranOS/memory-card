@@ -30,7 +30,7 @@ code {
   }
 
   20% {
-    transform: rotate(-1deg);
+    transform: rotate(-0.15deg);
   }
 
   40% {
@@ -38,7 +38,7 @@ code {
   }
 
   75% {
-    transform: rotate(3deg);
+    transform: rotate(0.5deg);
   }
 
   100% {

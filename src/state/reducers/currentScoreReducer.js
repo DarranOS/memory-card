@@ -1,4 +1,4 @@
-const currentScoreReducer = (state = 0, action) => {
+const currentScoreReducer = (state = 3, action) => {
   switch (action.type) {
     case "increase":
       return state + action.payload;

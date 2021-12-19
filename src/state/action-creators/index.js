@@ -25,6 +25,16 @@ export const increaseHighScore = (amount) => {
   };
 };
 
+export const selectedCardsReducer = (string) => {
+  console.log("AC " + string);
+  return (dispatch) => {
+    dispatch({
+      type: "select",
+      payload: string,
+    });
+  };
+};
+
 export const currentSelectedCard = (string) => {
   console.log(string);
   const timeout = (ms) => {
