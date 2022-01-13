@@ -10,9 +10,9 @@ import silumgar from "../assets/img/silumgar.png";
 import ojutai from "../assets/img/ojutai.png";
 import treva from "../assets/img/treva.png";
 
-const Artwork = (props) => {
-  const source = (props) => {
-    switch (props.art) {
+const Artwork = ({ src }) => {
+  const source = (src) => {
+    switch (src) {
       case "atarka":
         return atarka;
 
@@ -47,11 +47,8 @@ const Artwork = (props) => {
         return dromoka;
     }
   };
-  return (
-    <div className="Card__Front">
-      <img alt="dragon-art" src={source(props)}></img>
-    </div>
-  );
+
+  return <img alt="dragon-art" src={source(src)}></img>;
 };
 
 export default Artwork;

@@ -1,4 +1,4 @@
-const highScoreReducer = (state = 0, action) => {
+const highScoreReducer = (state = 5, action) => {
   switch (action.type) {
     case "increaseHigh":
       return state + action.payload;

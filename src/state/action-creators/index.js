@@ -1,3 +1,19 @@
+export const shuffleCards = () => {
+  return (dispatch) => {
+    dispatch({
+      type: "shuffle",
+    });
+  };
+};
+
+export const clearingCards = () => {
+  return (dispatch) => {
+    dispatch({
+      type: "clear",
+    });
+  };
+};
+
 export const increaseCurrentScore = (amount) => {
   return (dispatch) => {
     dispatch({
@@ -25,24 +41,10 @@ export const increaseHighScore = (amount) => {
   };
 };
 
-export const currentSelectedCard = (string) => {
-  console.log(string);
-  const timeout = (ms) => {
-    // Defines Timeout helper
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  };
-
-  const renderAlert = async (string) => {
-    // Pushs cards to state and resets incorrect toggle
-    await timeout(5000);
-    alert(`Wee!! ${string}`);
-  };
-
-  renderAlert(string);
-
+export const selectedCardsReducer = (string) => {
   return (dispatch) => {
     dispatch({
-      type: "change",
+      type: "select",
       payload: string,
     });
   };

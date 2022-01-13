@@ -1,12 +1,14 @@
 import { combineReducers } from "redux";
 import currentScoreReducer from "./currentScoreReducer";
 import highScoreReducer from "./highScoreReducer";
-import currentSelectedCard from "./currentSelectedCard";
+import selectedCardsReducer from "./selectedCardsReducer";
+import currentCardChoicesReducer from "./currentCardChoicesReducer";
 
 const reducers = combineReducers({
   current: currentScoreReducer,
   high: highScoreReducer,
-  selected: currentSelectedCard,
+  selected: selectedCardsReducer,
+  choices: currentCardChoicesReducer,
 });
 
 export default reducers;
