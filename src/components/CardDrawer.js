@@ -1,78 +1,104 @@
-import React from "react";
-import Card from "./Card";
-import { useSelector, useDispatch } from "react-redux";
-import { bindActionCreators } from "redux";
-import { actionCreators } from "../state/index";
-import styled from "styled-components";
+import React, { useState } from 'react'
+import Card from './Card'
+import { useSelector, useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from '../state/index'
+import styled from 'styled-components'
 
 export const CardDrawer = () => {
   // Redux Settings
 
-  const state = useSelector((state) => state);
-  const cardSelection = state.choices;
-  const selectedCards = state.selected;
+  const state = useSelector((state) => state)
+  const cardChoicePool = state.choices
+  const selectedCards = state.selected
 
-  console.log(state);
+  const [isReseting, setIsReseting] = useState(false)
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const {
+    selectedCardsReducer,
     increaseCurrentScore,
     resetCurrentScore,
-    increaseHighScore,
-    selectedCardsReducer,
-  } = bindActionCreators(actionCreators, dispatch);
+    shuffleCards,
+    clearingCards,
+  } = bindActionCreators(actionCreators, dispatch)
 
   const SelectedCardHandler = (str) => {
-    // TODO Selected Card Handler takes the id of the selected card,
-    // array.includes (resets)
-    resetCurrentScore(1);
-    selectedCardsReducer(str);
-  };
+    console.log(str)
+    setIsReseting(!isReseting)
+    // Checks if the selected cards ID (str) is included in the array of previously selected cards.
+    clearingCards()
 
-  const listItems = cardSelection.map((card) => (
-    <li
-      id={card.name}
-      key={card.name}
-      onClick={(e) => {
-        SelectedCardHandler(e.target.closest("li").id);
-      }}
-    >
-      <Card card={card} refresh={false} />
-    </li>
-  ));
+    if (selectedCards.includes(str)) {
+      resetCurrentScore(0)
+    } else {
+      selectedCardsReducer(str)
+      increaseCurrentScore(1)
+    }
+    setTimeout(() => {
+      shuffleCards()
+      setIsReseting(!isReseting)
+    }, 500)
+  }
 
-  const listedItems = selectedCards.map((card) => (
-    <li id={card.name} key={card.name}>
-      <p>{card.name}</p>
-    </li>
-  ));
+  const GenerateCard = (card) => {
+    // Maps through the array of randomly chosen cards to display 6 images.
+    return (
+      <li
+        id={card.name}
+        key={card.name}
+        onClick={(e) => {
+          SelectedCardHandler(e.target.closest('li').id)
+        }}
+      >
+        <Card src={card.name}></Card>
+      </li>
+    )
+  }
 
   return (
-    // Returns JSX
     <Container>
-      <ul>{listItems}</ul>
-      {selectedCards && <ul>{listedItems}</ul>}
+      {cardChoicePool.map((card) => (
+        <GenerateCard key={card.name} name={card.name} />
+      ))}
     </Container>
-  );
-};
+  )
+}
 
-export default CardDrawer;
+export default CardDrawer
 
 const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  ${"" /* overflow: hidden; */}
-  width: 100%;
+  width: 86%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto, auto, auto;
+  row-gap: 2vh;
+  column-gap: 4vw;
+  place-items: center start;
+  perspective: 1000px;
+  height: calc(90vh - 4vh);
 
-  ul {
-    display: flex;
-    margin-top: -22%;
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto, auto;
+    width: 80%;
+    row-gap: 5vh;
+    column-gap: 4vw;
+  }
 
-    li {
-      list-style: none;
+  li {
+    list-style: none;
+    perspective: 1000px;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+
+    @media (min-width: 768px) {
+      height: 70%;
+      width: 80%;
+      padding: 20px;
     }
   }
-`;
+`

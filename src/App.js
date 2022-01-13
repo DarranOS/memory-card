@@ -1,37 +1,44 @@
-import CardDrawer from "./components/CardDrawer";
-import Scores from "./components/Scores";
-import Instructions from "./components/Instructions";
-import styled from "styled-components";
+import CardDrawer from './components/CardDrawer'
+import styled from 'styled-components'
+import Sidebar from './components/Sidebar'
+import InstructionsBackDrop from './components/InstructionsBackDrop'
+import React from 'react'
+import Scores from './components/Scores'
+import MobileScores from './components/MobileScores'
 
 function App() {
   return (
     <Container className="App">
-      <Background></Background>
-      <Sidebar>
-        <Instructions />
-        <Scores />
-      </Sidebar>
+      <Background />
+      <Sidebar />
+      <MobileScores />
 
       <Main>
         <CardDrawer />
       </Main>
+      <InstructionsBackDrop />
     </Container>
-  );
+  )
 }
 
-export default App;
+export default App
 
 const Container = styled.main`
   display: flex;
-
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  align-items: center;
   height: 100vh;
   width: 100vw;
   position: relative;
   overflow: hidden;
-`;
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+`
 
 const Background = styled.div`
-  background: url("/img/bg.jpg"), rgba(40, 0, 20, 0.5);
+  background: url('/img/bg.jpg'), rgba(40, 0, 20, 0.5);
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-position: center;
@@ -43,18 +50,19 @@ const Background = styled.div`
   bottom: 0;
   right: 0;
   z-index: -10;
-`;
 
-const Sidebar = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: 15%;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: rgba(138, 43, 226, 0.4);
-`;
+  @media (min-width: 768px) {
+    background-position: 30% 0;
+  }
+`
 
 const Main = styled.main`
-  width: 85%;
-`;
+  width: 82vw;
+  display: grid;
+  place-items: center;
+  max-height: 100vh;
+  @media (min-width: 768px) {
+    height: 100vh;
+    width: 100vw;
+  }
+`

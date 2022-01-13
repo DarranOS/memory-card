@@ -1,30 +1,36 @@
 const CardInfo = [
-  { name: "treva", manaValue: 6 },
-  { name: "darigaaz", manaValue: 6 },
-  { name: "rith", manaValue: 6 },
-  { name: "dromar", manaValue: 6 },
-  { name: "crosis", manaValue: 6 },
-  { name: "atarka", manaValue: 6 },
-  { name: "dromoka", manaValue: 6 },
-  { name: "kolaghan", manaValue: 6 },
-  { name: "silumgar", manaValue: 6 },
-  { name: "ojutai", manaValue: 6 },
+  { name: "treva" },
+  { name: "darigaaz" },
+  { name: "rith" },
+  { name: "dromar" },
+  { name: "crosis" },
+  { name: "atarka" },
+  { name: "dromoka" },
+  { name: "kolaghan" },
+  { name: "silumgar" },
+  { name: "ojutai" },
 ];
 
 const CardRandomizer = () => {
-  // Shuffles the cards and selects/returns 5 random cards
+  // Shuffles the cards and selects/returns 6 random cards
   const randomizedCards = [...CardInfo];
   randomizedCards.sort(() => Math.random() - 0.5);
   randomizedCards.sort(() => Math.random() - 0.5);
   randomizedCards.sort(() => Math.random() - 0.5);
-  while (randomizedCards.length > 5) {
+  while (randomizedCards.length > 6) {
     randomizedCards.pop();
   }
+
   return randomizedCards;
 };
 
 const currentCardChoicesReducer = (state = CardRandomizer(), action) => {
   switch (action.type) {
+    case "shuffle":
+      const newArray = CardRandomizer();
+      return newArray;
+    case "clear":
+      return [];
     default:
       return state;
   }
