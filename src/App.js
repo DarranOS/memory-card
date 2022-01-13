@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import Sidebar from './components/Sidebar'
 import InstructionsBackDrop from './components/InstructionsBackDrop'
 import React from 'react'
-import Scores from './components/Scores'
 import MobileScores from './components/MobileScores'
 
 function App() {
