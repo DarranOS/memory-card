@@ -1,9 +1,9 @@
-import CardDrawer from './components/CardDrawer'
 import styled from 'styled-components'
-import Sidebar from './components/Sidebar'
+import { Background, Sidebar, CardDrawer } from './containers'
+
 import InstructionsBackDrop from './components/InstructionsBackDrop'
-import React from 'react'
 import MobileScores from './components/MobileScores'
+import CardDealer from './components/CardDealer'
 
 function App() {
   return (
@@ -13,7 +13,9 @@ function App() {
       <MobileScores />
 
       <Main>
-        <CardDrawer />
+        <CardDrawer>
+          <CardDealer />
+        </CardDrawer>
       </Main>
       <InstructionsBackDrop />
     </Container>
@@ -33,25 +35,6 @@ const Container = styled.main`
   overflow: hidden;
   @media (min-width: 768px) {
     flex-direction: row;
-  }
-`
-
-const Background = styled.div`
-  background: url('/img/bg.jpg'), rgba(40, 0, 20, 0.5);
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  background-blend-mode: multiply;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  z-index: -10;
-
-  @media (min-width: 768px) {
-    background-position: 30% 0;
   }
 `
 

@@ -1,8 +1,7 @@
-import React from 'react'
-import Instructions from './Instructions'
-import Scores from './Scores'
-import Credits from './Credits'
 import styled from 'styled-components'
+import Instructions from '../components/Instructions'
+import Scores from '../components/Scores'
+import Credits from '../components/Credits'
 
 function Sidebar() {
   return (
@@ -25,7 +24,6 @@ const Container = styled.div`
   padding: 15px;
   justify-content: space-between;
   flex-direction: column;
-
   height: 100vh;
 
   @media (min-width: 768px) {
