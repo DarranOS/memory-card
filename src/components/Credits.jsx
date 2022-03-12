@@ -1,8 +1,5 @@
 import React from 'react'
-import springLogo from '../assets/svg/react-spring-logo.svg'
-import odinLogo from '../assets/svg/odin-logo.svg'
-import reactLogo from '../assets/svg/react-logo.svg'
-import githubLogo from '../assets/svg/github-logo.svg'
+import { svgs } from '../constants/svgs'
 import styled from 'styled-components'
 
 const Credits = () => {
@@ -14,32 +11,32 @@ const Credits = () => {
       <ul>
         <li>
           <div>
-            <img src={odinLogo} alt="logo" />
+            <img src={svgs.odin} alt="logo" />
             Built for Odin Project
           </div>
         </li>
         <li>
           <div>
-            <img src={reactLogo} alt="logo" />
+            <img src={svgs.react} alt="logo" />
             with React Redux
           </div>
         </li>
         <li>
           <div>
-            <img src={springLogo} alt="logo" />
-            and React-Spring
+            <img src={svgs.spring} alt="logo" />
+            and Framer Motion
           </div>
         </li>
         <li>
           <a href="https://github.com/DarranOS">
-            <img src={githubLogo} alt="logo" />
+            <img src={svgs.github} alt="logo" />
             Check my Github
           </a>
         </li>
 
         <li>
           <a href="https://darranoshea.co.uk">
-            <img src={githubLogo} alt="logo" />
+            <img src={svgs.github} alt="logo" />
             Or my site
           </a>
         </li>

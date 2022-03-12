@@ -3,9 +3,8 @@ import Card from './Card'
 import { useSelector, useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../state/index'
-import styled from 'styled-components'
 
-export const CardDrawer = () => {
+export const CardDealer = () => {
   // Redux Settings
 
   const state = useSelector((state) => state)
@@ -49,7 +48,7 @@ export const CardDrawer = () => {
         id={card.name}
         key={card.name}
         onClick={(e) => {
-          SelectedCardHandler(e.target.closest('li').id)
+          SelectedCardHandler(card.name)
         }}
       >
         <Card src={card.name}></Card>
@@ -58,47 +57,12 @@ export const CardDrawer = () => {
   }
 
   return (
-    <Container>
+    <>
       {cardChoicePool.map((card) => (
         <GenerateCard key={card.name} name={card.name} />
       ))}
-    </Container>
+    </>
   )
 }
 
-export default CardDrawer
-
-const Container = styled.div`
-  width: 86%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: auto, auto, auto;
-  row-gap: 2vh;
-  column-gap: 4vw;
-  place-items: center start;
-  perspective: 1000px;
-  height: calc(90vh - 4vh);
-
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto, auto;
-    width: 80%;
-    row-gap: 5vh;
-    column-gap: 4vw;
-  }
-
-  li {
-    list-style: none;
-    perspective: 1000px;
-    width: 100%;
-    height: 100%;
-    display: grid;
-    place-items: center;
-
-    @media (min-width: 768px) {
-      height: 70%;
-      width: 80%;
-      padding: 20px;
-    }
-  }
-`
+export default CardDealer
