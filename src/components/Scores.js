@@ -6,13 +6,13 @@ const Scores = () => {
 
   return (
     <ScoresContainer>
-      <CurrentScoreContainer>
+      <CurrentScoreContainer scoreUI={score.scoreUI}>
         <p>Current</p>
         <p>Score:</p>
         <hr />
         <h4>{score.current}</h4>
       </CurrentScoreContainer>
-      <HighScoreContainer>
+      <HighScoreContainer highScoreUI={score.highScoreUI}>
         <p>High</p>
         <p>Score:</p>
         <hr />
@@ -42,7 +42,12 @@ const CurrentScoreContainer = styled.div`
   align-items: center;
   text-align: center;
   width: 100%;
-  background-color: rgba(138, 43, 226, 0.3);
+  background-color: ${(props) =>
+    props.scoreUI === 'reseting'
+      ? 'rgba(238, 43, 126, 0.65)'
+      : props.scoreUI === 'increasing'
+      ? 'rgba(138, 43, 226, 0.65)'
+      : 'rgba(138, 43, 226, 0.3)'};
   height: 100%;
   padding: 3px;
   margin: 2vh 0;
@@ -79,5 +84,8 @@ const CurrentScoreContainer = styled.div`
 `
 
 const HighScoreContainer = styled(CurrentScoreContainer)`
-  background-color: rgba(146, 125, 2, 0.5);
+  background-color: ${(props) =>
+    props.highScoreUI === 'increasing'
+      ? 'rgba(146, 125, 2, 0.9)'
+      : 'rgba(146, 125, 2, 0.5)'};
 `
