@@ -1,10 +1,10 @@
-const highScoreReducer = (state = 5, action) => {
+const highScoreReducer = (state = 2, action) => {
   switch (action.type) {
-    case "increaseHigh":
-      return state + action.payload;
+    case 'increaseHigh':
+      return state + action.payload
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default highScoreReducer;
+export default highScoreReducer

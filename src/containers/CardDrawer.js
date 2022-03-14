@@ -8,9 +8,9 @@ const CardDrawer = ({ children }) =>
   // and populates it with its children(cards).
   {
     return (
-      <Container layout>
-        <AnimatePresence>{children}</AnimatePresence>
-      </Container>
+      <AnimatePresence>
+        <Container layout>{children}</Container>
+      </AnimatePresence>
     )
   }
 
@@ -26,16 +26,16 @@ const Container = styled(motion.div)`
   row-gap: 1vh;
   column-gap: 4vw;
   place-items: center start;
-  perspective: 1000px;
   height: calc(90vh - 4vh);
-  background: lime;
+  perspective: 1000px;
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto, auto;
-    width: 80%;
+    width: 90%;
     row-gap: 0vh;
-    column-gap: 4vw;
+    column-gap: 2vw;
+    height: calc(96vh - 4vh);
   }
 
   li {
@@ -45,12 +45,11 @@ const Container = styled(motion.div)`
     height: 100%;
     display: grid;
     place-items: center;
-    background: yellow;
 
     @media (min-width: 768px) {
-      height: 90%;
-      width: 80%;
-      padding: 20px;
+      height: 100%;
+      width: 100%;
+      padding: 10px;
     }
   }
 `

@@ -8,18 +8,15 @@ const Card = ({ src }) => {
 
   return (
     <Container
+      id="Container"
       layout
-      initial={{ opacity: 0, rotateY: 180 }}
-      animate={{ opacity: 1, rotateY: 0 }}
-      exit={{ opacity: 0, rotateY: 180 }}
+      initial={{ scale: 0.2, opacity: 0, rotateY: -180 }}
+      animate={{ scale: 1, opacity: 1, rotateY: 0 }}
+      exit={{ scale: 0.2, opacity: 0, rotateY: -180 }}
       transition={{ duration: 0.2 }}
     >
-      <BackImage>
-        <img alt="cardback" src={images.cardback} />
-      </BackImage>
-      <FrontImage>
-        <img alt="dragon-art" src={images[src]} />
-      </FrontImage>
+      <BackImage />
+      <FrontImage art={images[src]} />
     </Container>
   )
 }
@@ -31,14 +28,10 @@ export default Card
 const Container = styled(motion.div)`
   position: relative;
   height: 100%;
-  width: 100%;
+  width: 70%;
   filter: drop-shadow(0px 4px 16px transparent) drop-shadow(0px 12px 24px transparent);
+  cursor: pointer;
   transition: all 1s ease-out;
-  transform-style: preserve-3d;
-  transform-origin: center;
-  -webkit-backface-visibility: initial;
-  backface-visibility: initial;
-  background: red;
 
   :hover {
     filter: drop-shadow(0px 4px 8px #ffccef) drop-shadow(0px 12px 28px #771166);
@@ -47,39 +40,24 @@ const Container = styled(motion.div)`
   }
 `
 
-const FrontImage = styled.div`
+const FrontImage = styled(motion.div)`
   opacity: 1;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  transform-style: preserve-3d;
-  transform-origin: center;
   -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
   transform: rotateY(0);
   position: absolute;
-  background: blue;
-
-  img {
-    width: calc(25% + 10rem);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-
-  @media (min-width: 768px) {
-    img {
-      width: 100%;
-    }
-  }
+  background: ${(props) => props.art && `url(${props.art})`};
+  background-size: cover;
+  height: 100%;
+  width: 100%;
 `
 
 const BackImage = styled(FrontImage)`
   transform: rotateY(180deg);
+  background: url(${images.cardback});
   -webkit-backface-visibility: visible;
   backface-visibility: visible;
-  background: white;
-
-  img {
-    -webkit-backface-visibility: visible;
-    backface-visibility: visible;
-    background: white;
-  }
+  background-size: cover;
 `
