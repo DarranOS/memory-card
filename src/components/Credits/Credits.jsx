@@ -1,5 +1,5 @@
 import React from 'react'
-import { svgs } from '../constants/svgs'
+import { svgs } from 'constants/svgs'
 import styled from 'styled-components'
 
 const Credits = () => {
@@ -36,7 +36,7 @@ const Credits = () => {
 
         <li>
           <a href="https://darranoshea.co.uk">
-            <img src={svgs.github} alt="logo" />
+            <img src="mstile-150x150.png" style={{ padding: '0' }} alt="logo" />
             Or my site
           </a>
         </li>
@@ -89,6 +89,7 @@ const Container = styled.div`
         color: white;
         font-size: calc(0.8rem + 1vh);
         justify-self: center;
+        text-decoration: none;
 
         img {
           width: 5vh;

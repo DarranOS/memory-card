@@ -1,5 +1,5 @@
 import React from 'react'
-import Scores from './Scores'
+import { Scores } from 'components'
 import styled from 'styled-components'
 
 function MobileScores() {

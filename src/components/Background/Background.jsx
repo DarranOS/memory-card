@@ -1,10 +1,15 @@
 import styled from 'styled-components'
-import { images } from '../constants/images'
+import { images } from 'constants/images'
+import { useSelector } from 'react-redux'
 
 // Returns Background component
 
 const Background = () => {
-  return <Container desktop={images.bg} mobile={images.mbg} />
+  // The score variable sends props to the color below. Background flashes red when score resets.
+
+  const score = useSelector((state) => state)
+
+  return <Container desktop={images.bg} mobile={images.mbg} scoreUI={score.scoreUI} />
 }
 
 export default Background
@@ -28,6 +33,8 @@ const Container = styled.div`
   @media (min-width: 768px) {
     background: ${(props) =>
       props.desktop && `url(${props.desktop}), rgba(40, 0, 20, 0.5)`};
+    background-color: ${(props) =>
+      props.scoreUI === 'reseting' ? 'rgba(238, 43, 126, 0.95)' : 'rgba(40, 0, 20, 0.5)'};
     background-size: cover;
   }
 `

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import Instructions from './Instructions'
+import { Instructions } from 'components'
 
 function InstructionsBackDrop() {
   const [instructions, setInstructions] = useState(true)

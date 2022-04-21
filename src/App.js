@@ -1,9 +1,8 @@
 import styled from 'styled-components'
-import { Background, Sidebar, CardDrawer } from './containers'
+import { InstructionsBackDrop, MobileScores, Background, Sidebar } from 'components'
+import { CardDrawer } from 'controllers'
 
-import InstructionsBackDrop from './components/InstructionsBackDrop'
-import MobileScores from './components/MobileScores'
-import CardDealer from './components/CardDealer'
+// The Redux state is handled in the CardDrawer component.
 
 function App() {
   return (
@@ -13,9 +12,7 @@ function App() {
       <MobileScores />
 
       <Main>
-        <CardDrawer>
-          <CardDealer />
-        </CardDrawer>
+        <CardDrawer />
       </Main>
       <InstructionsBackDrop />
     </Container>
@@ -39,7 +36,7 @@ const Container = styled.main`
 `
 
 const Main = styled.main`
-  width: 82vw;
+  width: 96vw;
   display: grid;
   place-items: center;
   max-height: 100vh;

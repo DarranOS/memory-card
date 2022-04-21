@@ -1,20 +1,9 @@
 import styled from 'styled-components'
-import { images } from '../constants/images'
-import { motion } from 'framer-motion/dist/framer-motion'
+import { images } from 'constants/images'
 
 const Card = ({ src }) => {
-  // Returns a div with both faces of the card. Is a motion div with the
-  // ? "layout" motion property https://www.framer.com/docs/animate-shared-layout/
-
   return (
-    <Container
-      id="Container"
-      layout
-      initial={{ scale: 0.2, opacity: 0, rotateY: -180 }}
-      animate={{ scale: 1, opacity: 1, rotateY: 0 }}
-      exit={{ scale: 0.2, opacity: 0, rotateY: -180 }}
-      transition={{ duration: 0.2 }}
-    >
+    <Container id="Container">
       <BackImage />
       <FrontImage art={images[src]} />
     </Container>
@@ -25,10 +14,10 @@ export default Card
 
 // Styling only below
 
-const Container = styled(motion.div)`
+const Container = styled.div`
   position: relative;
   height: 100%;
-  width: 70%;
+  width: 100%;
   filter: drop-shadow(0px 4px 16px transparent) drop-shadow(0px 12px 24px transparent);
   cursor: pointer;
   transition: all 1s ease-out;
@@ -38,9 +27,13 @@ const Container = styled(motion.div)`
     animation: pushUp 0.2s ease-out 0s 1 forwards, lightUp 1s ease-in-out 0.3s infinite,
       wiggle 1s ease-in-out 0.3s infinite;
   }
+
+  @media (min-width: 768px) {
+    width: 70%;
+  }
 `
 
-const FrontImage = styled(motion.div)`
+const FrontImage = styled.div`
   opacity: 1;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
